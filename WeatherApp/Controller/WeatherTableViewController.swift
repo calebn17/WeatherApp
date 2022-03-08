@@ -12,7 +12,7 @@ import CoreLocation
 class WeatherTableViewController: SwipeTableViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var addButton: UIBarButtonItem!
+    @IBOutlet weak var locationButton: UIBarButtonItem!
     
     
     let realm = try! Realm()
@@ -24,25 +24,27 @@ class WeatherTableViewController: SwipeTableViewController {
     var weatherModelArray: [WeatherModel] = []
     //creates an instance of the WeatherManager object to call some of its methods
     var weatherManager = WeatherManager()
-    
+    //creates an instance of the CLLocationManager in order to use CLLocation methods
     let locationManager = CLLocationManager()
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tableView.backgroundView = UIImageView(image: UIImage(named: "background"))
+        tableView.backgroundView?.contentMode = UIView.ContentMode.scaleAspectFill
         //sets this VC as a delegate for the WeatherManager
         weatherManager.delegate = self
         searchBar.delegate = self
         
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
+        //locationManager.requestLocation()
         
         //fetches data from Realm upon loading to see if there are any data that was stored
         loadWeatherRealmData()
        
     }
+    
 
 //MARK: - TableView methods
     
@@ -54,8 +56,10 @@ class WeatherTableViewController: SwipeTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
-        if weatherRealmData?[indexPath.row].name != "" {
+        if weatherRealmData?[indexPath.row].name == nil {
+            cell.textLabel?.text = "No Cities Added Yet"
             
+        } else {
             var temp : String = ""
             var city: String = ""
             
@@ -66,8 +70,7 @@ class WeatherTableViewController: SwipeTableViewController {
                 cell.textLabel!.text = city + "    " + temp + " F"
                 print("Everything is done")
             }
-        } else {
-            cell.textLabel?.text = "No Cities Added Yet"
+            
             return cell
         }
         
@@ -89,9 +92,10 @@ class WeatherTableViewController: SwipeTableViewController {
         }
     }
     
-//MARK: - Tableview Delegate Methods
+//MARK: - Tableview Segue/Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //Sets up the segue from the Table VC to the Detail VC
         performSegue(withIdentifier: "weatherToDetails", sender: self)
     }
     
@@ -188,16 +192,18 @@ extension WeatherTableViewController {
 
 
 extension WeatherTableViewController: CLLocationManagerDelegate {
-
+    //When the locationButton is pressed, this block will kick off
     @IBAction func locationPressed(_ sender: UIButton) {
         locationManager.requestLocation()
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        //grabs the last location found by the device
         if let location = locations.last {
             locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let lon = location.coordinate.longitude
+            //passes the latitude and longitude to the WeatherManager
             weatherManager.fetchWeather(latitude: lat, longitude: lon)
         }
     }

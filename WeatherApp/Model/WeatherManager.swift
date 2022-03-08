@@ -9,6 +9,7 @@ import Foundation
 import CoreLocation
 
 protocol WeatherManagerDelegate {
+    //this allows the WeatherManager to pass over the decoded Json in a WeatherModel object to the Table VC
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel)
     func didFailWithError(error: Error)
 }
@@ -20,14 +21,18 @@ struct WeatherManager {
     
     var delegate: WeatherManagerDelegate?
     
+    //function called by the Table VC that passes a city name to the WeatherManager to grab the weather data
     func fetchWeather(cityName: String) {
         let urlString = "\(weatherURL)&q=\(cityName)"
         print(urlString)
+        //makes the API call and returns a WeatherModel object to the Table VC
         performRequest(with: urlString)
     }
     
+    //function called by the Table VC that passes latitude and longitude to the WeatherManager to grab the weather data
     func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         let urlString = "\(weatherURL)&lat=\(latitude)&lon=\(longitude)"
+        //makes the API call and returns a WeatherModel object to the Table VC
         performRequest(with: urlString)
     }
     
