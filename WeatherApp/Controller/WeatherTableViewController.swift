@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import CoreLocation
 
 class WeatherTableViewController: SwipeTableViewController {
     
@@ -24,6 +25,8 @@ class WeatherTableViewController: SwipeTableViewController {
     //creates an instance of the WeatherManager object to call some of its methods
     var weatherManager = WeatherManager()
     
+    let locationManager = CLLocationManager()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +34,10 @@ class WeatherTableViewController: SwipeTableViewController {
         //sets this VC as a delegate for the WeatherManager
         weatherManager.delegate = self
         searchBar.delegate = self
+        
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
         
         //fetches data from Realm upon loading to see if there are any data that was stored
         loadWeatherRealmData()
@@ -180,23 +187,23 @@ extension WeatherTableViewController {
 //MARK: - CLLocationManagerDelegate
 
 
-//extension WeatherTableViewController: CLLocationManagerDelegate {
-//
-//    @IBAction func locationPressed(_ sender: UIButton) {
-//        locationManager.requestLocation()
-//    }
-//
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        if let location = locations.last {
-//            locationManager.stopUpdatingLocation()
-//            let lat = location.coordinate.latitude
-//            let lon = location.coordinate.longitude
-//            weatherManager.fetchWeather(latitude: lat, longitude: lon)
-//        }
-//    }
-//
-//    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-//        print(error)
-//    }
-//}
+extension WeatherTableViewController: CLLocationManagerDelegate {
+
+    @IBAction func locationPressed(_ sender: UIButton) {
+        locationManager.requestLocation()
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            locationManager.stopUpdatingLocation()
+            let lat = location.coordinate.latitude
+            let lon = location.coordinate.longitude
+            weatherManager.fetchWeather(latitude: lat, longitude: lon)
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
+}
 
