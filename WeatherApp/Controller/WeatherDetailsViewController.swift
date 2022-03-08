@@ -13,12 +13,12 @@ class WeatherDetailsViewController: UIViewController {
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var conditionImage: UIImageView!
-    
     @IBOutlet weak var feelsLikeLabel: UILabel!
+    
     var weatherDetailsData: Results<WeatherDetailsData>?
     let realm = try! Realm()
     
-    
+    //initializing the data
     var cityName:String = "No city Name"
     var temp: Double = 0.00
     var condition: String = ""
@@ -28,9 +28,9 @@ class WeatherDetailsViewController: UIViewController {
         super.viewDidLoad()
         
         cityLabel.text = cityName
-        tempLabel.text = String(temp)
+        tempLabel.text = "Temperature: \(temp) F"
         conditionImage.image = UIImage(systemName: condition)
-        feelsLikeLabel.text = String(feelsLike)
+        feelsLikeLabel.text = "Feels like: \(feelsLike) F"
         
         
         

@@ -51,7 +51,8 @@ class WeatherTableViewController: SwipeTableViewController {
             
             var temp : String = ""
             var city: String = ""
-        
+            
+            //composes the cell label from weatherRealmData
             if let weather = weatherRealmData?[indexPath.row] {
                 temp = String(format: "%.2f", weather.temp)
                 city = weather.name
@@ -68,6 +69,7 @@ class WeatherTableViewController: SwipeTableViewController {
     }
     
 //MARK: - Deleting data from swipe
+    
     override func updateModel(at indexPath: IndexPath) {
         if let categoryForDeletion = self.weatherRealmData?[indexPath.row] {
             do {
@@ -81,10 +83,12 @@ class WeatherTableViewController: SwipeTableViewController {
     }
     
 //MARK: - Tableview Delegate Methods
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "weatherToDetails", sender: self)
     }
     
+    //passes over all the relevant data to the Detail VC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! WeatherDetailsViewController
         if let indexPath = tableView.indexPathForSelectedRow {
@@ -106,7 +110,7 @@ class WeatherTableViewController: SwipeTableViewController {
 
 extension WeatherTableViewController: WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
-        
+        //grabs the parsed data from the Json/API and adds it into a WeatherRealmData object
         DispatchQueue.main.async {
             self.weatherModelArray.append(weather)
             print("didUpdateWeather \(weather.temperature) degrees  \(weather.cityName)")
@@ -131,11 +135,12 @@ extension WeatherTableViewController: WeatherManagerDelegate {
 extension WeatherTableViewController: UISearchBarDelegate{
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-
+        //whenever a city is entered in the search bar and the search button is pressed, the fetchWeather method is called to grab the data associated to that city
         cityName = searchBar.text!
         weatherManager.fetchWeather(cityName: cityName)
     }
-
+    
+    //This dismisses the keyboard when the user taps elsewhere
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
             tableView.reloadData()
