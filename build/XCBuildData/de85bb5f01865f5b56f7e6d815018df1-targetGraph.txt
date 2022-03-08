@@ -1,0 +1,5 @@
+Target dependency graph (3 targets)
+Pods-WeatherApp in Pods, no dependencies
+Pods-WeatherApp-WeatherAppUITests in Pods, no dependencies
+Pods-WeatherAppTests in Pods, depends on:
+Pods-WeatherApp in Pods (explicit)

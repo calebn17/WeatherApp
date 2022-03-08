@@ -1,0 +1,52 @@
+{
+  "_buildCommand2" : {
+    "command" : "prepareForIndexing",
+    "enableIndexBuildArena" : false,
+    "targets" : null
+  },
+  "buildCommand" : "build",
+  "configuredTargets" : [
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98f44ed98c184a7cb9655ec7667523180b"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98f15be6ac19f3232c9c8facb065c09969"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98b2d9bb0c25c7073f9b901d3d41e39247"
+    }
+  ],
+  "containerPath" : "/Users/cngai/Desktop/gitRepo/iOSDevelopment/iOSBootcamp/WeatherApp/WeatherApp/Pods/Pods.xcodeproj",
+  "continueBuildingAfterErrors" : true,
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "",
+      "buildProductsPath" : "",
+      "derivedDataPath" : "/Users/cngai/Library/Developer/Xcode/DerivedData",
+      "indexDataStoreFolderPath" : "/Users/cngai/Library/Developer/Xcode/DerivedData/Pods-ccfcxrzixamnhacpfypyqcavpxpt/Index/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/cngai/Library/Developer/Xcode/DerivedData/Pods-ccfcxrzixamnhacpfypyqcavpxpt/Index/PrecompiledHeaders",
+      "pchPath" : ""
+    },
+    "configurationName" : "Release",
+    "overrides" : {
+      "synthesized" : {
+        "table" : {
+          "ENABLE_PREVIEWS" : "NO"
+        }
+      }
+    }
+  },
+  "qos" : "default",
+  "schemeCommand" : "launch",
+  "schemeCommand2" : "launch",
+  "shouldCollectMetrics" : false,
+  "showNonLoggedProgress" : true,
+  "useDryRun" : true,
+  "useImplicitDependencies" : false,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : false
+}
