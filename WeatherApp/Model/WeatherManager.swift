@@ -46,7 +46,7 @@ struct WeatherManager {
                 }
                 if let safeData = data {
                     if let weather = self.parseJSON(safeData) {
-                        print("Parsed data, \(weather.cityName)")
+                        print("Parsed data")
                         self.delegate?.didUpdateWeather(self, weather: weather)
                     }
                 }
@@ -63,7 +63,7 @@ struct WeatherManager {
             let temp = decodedData.main.temp
             let name = decodedData.name
             let feelsLike = decodedData.main.feels_like
-            print("Parsing data, \(temp) \(feelsLike)")
+            print("Parsing data")
             let weather = WeatherModel(conditionId: id, cityName: name, temperature: temp, feelsLike: feelsLike)
             return weather
             

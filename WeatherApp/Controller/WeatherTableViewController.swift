@@ -32,6 +32,11 @@ class WeatherTableViewController: SwipeTableViewController {
         super.viewDidLoad()
         tableView.backgroundView = UIImageView(image: UIImage(named: "background"))
         tableView.backgroundView?.contentMode = UIView.ContentMode.scaleAspectFill
+        
+        let image = UIImage()
+        searchBar.backgroundImage = image
+        searchBar.backgroundColor = .clear
+        searchBar.barTintColor = .clear
         //sets this VC as a delegate for the WeatherManager
         weatherManager.delegate = self
         searchBar.delegate = self
@@ -124,7 +129,7 @@ extension WeatherTableViewController: WeatherManagerDelegate {
         //grabs the parsed data from the Json/API and adds it into a WeatherRealmData object
         DispatchQueue.main.async {
             self.weatherModelArray.append(weather)
-            print("didUpdateWeather \(weather.temperature) degrees  \(weather.cityName)")
+            print("didUpdateWeather")
             
             let newWeatherRealmData = WeatherRealmData()
             newWeatherRealmData.name = weather.cityName
